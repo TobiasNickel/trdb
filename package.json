@@ -1,0 +1,21 @@
+{
+  "name": "trdb",
+  "version": "0.0.0",
+  "description": "Tobias Rapid Database",
+  "main": "src/trdb.js",
+  "bin": "./bin/trdb.cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TobiasNickel/trdb.git"
+  },
+  "keywords": [],
+  "author": "Tobias Nickel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TobiasNickel/trdb/issues"
+  },
+  "homepage": "https://github.com/TobiasNickel/trdb#readme"
+}
