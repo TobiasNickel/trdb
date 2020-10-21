@@ -1,2 +1,5 @@
 test/
 dist/
+*.js
+coverage/
+test/tmpTestDB.json

@@ -1,5 +1,6 @@
-import { newFileDB } from '../src/trdb.js';
-const fs = require('fs');
+import { newFileDB } from '../src/trdb';
+import * as fs from 'fs';
+
 const tmpTestFile = __dirname+'/tmpTestDB.json'
 
 
@@ -8,21 +9,25 @@ interface IUser{
     job: string; 
     id: string; 
     favoriteHobby:string;
+    created: Date;
 }
 
 main().catch(err=>console.log(err)).then(()=>process.exit());
 async function main(){
     try{ await fs.promises.unlink(tmpTestFile); }catch(err){}
-    const db = await newFileDB(tmpTestFile);
+    const db = newFileDB(tmpTestFile);
     const users = db.collection<IUser>('users');
 
     const user = await users.insert({
         name: 'Tobias Nickel',
         job: 'technical lead',
+        created: new Date(),
     });
 
     user.favoriteHobby = 'programming';
     await users.save(user);
+
+    try{ await users.save({} as any); }catch(err){}
 
     await users.insertMany([
         {
@@ -33,6 +38,13 @@ async function main(){
         }
     ]);
 
+    await users.findOne({name: 'Tobias Nickel'})
+    
+    await users.findOne({id:['123']});
+    await users.remove({id:''})
+
+    fs.writeFileSync(tmpTestFile, JSON.stringify(db.data));
+    await new Promise(resolve=>setTimeout(resolve, 100));
     await fs.promises.unlink(tmpTestFile);
     console.log('done')
 }

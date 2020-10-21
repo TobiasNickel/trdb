@@ -2,7 +2,9 @@
     "compilerOptions": {
         "allowJs": true,
         "checkJs": true,
-        "target": "es2017",
-        "outDir": "dist"
-    }
+        "target": "ES2017",
+        "module": "commonjs"
+    },
+    "exclude": ["./node_modules", "./coverage"],
+    "include": ["."]
 }
