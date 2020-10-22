@@ -9,3 +9,4 @@ console.log('  - insert json into collection');
 console.log('  - delete from collection');
 console.log('  - update items in collection');
 console.log('  - api server similar to json-server');
+console.log('  - an interactive mode');

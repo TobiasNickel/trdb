@@ -3,3 +3,10 @@ dist/
 *.js
 coverage/
 test/tmpTestDB.json
+tsconfig.json
+
+bin/trdb.cli.d.ts
+.nyc_output/
+
+src/trdb.ts
+bin/trdb.cli.ts

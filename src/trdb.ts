@@ -2,34 +2,34 @@ import * as fs from 'fs';
 
 type TOptions = {
     idName?: string;
-    newId?: (...args: any) => string | number
+    newId?: (collection?: any[], idName?: string) => string | number
 }
 
-export function newFileDB(filePath, options?: TOptions) {
+type TSchema<TT> = {
+    [x in keyof TT]: true
+}
+
+type TDbData = {
+    [x: string]: any[]
+}
+
+export function newFileDB(filePath: string, options?: TOptions) {
     const {
         idName = 'id',
         newId = uuid,
     }: TOptions = { ...(options || {}) };
 
-    type TSchema<TT> = {
-        [x in keyof TT]: true
-    }
-
-    type TDbData = {
-        [x: string]: any[]
-    }
-
     const db = {
         data: {} as TDbData,
-        connected: loadData(filePath).then(data => {
+        connected: loadData(filePath).then(async data => {
             db.data = { ...db.data, ...data };
-            saveData(filePath, db.data).catch(err => console.log(err));
+            await saveData(filePath, db.data);
         }),
 
-        collection<T>(collectionName: string, schema?: TSchema<T>) {
+        collection<T>(collectionName: string) {
             if (!db.data[collectionName]) db.data[collectionName] = [];
 
-            const fieldNames = Object.keys(schema || {});
+            // const fieldNames = Object.keys(schema || {});
 
             const collection = {
 
@@ -87,11 +87,10 @@ export function newFileDB(filePath, options?: TOptions) {
             // fieldNames.forEach(fieldName => {
             //     const FieldName = fieldName[0].toUpperCase() + fieldName.substr(1);
             //     collection['getBy' + FieldName] = (value) => {
-
             //         // @ts-ignore
             //         return collection.find({ [fieldName]: value });
             //     }
-
+            //
             //     collection['getOneBy' + FieldName] = (value) => {
             //         // @ts-ignore
             //         return collection.findOne({ [fieldName]: value });
@@ -133,13 +132,6 @@ function match<T>(item: T, attrs: TAttribute<T>) {
     return true;
 }
 
-/**
- * @typedef Deferrer
- * @property {function} resolve
- * @property {function} reject
- * @property {Promise} promise
- */
-
 type TDeferrer<T> = {
     resolve: (value?: T) => void
     reject: (err: Error | any) => void
@@ -161,11 +153,7 @@ export function newDeferrer<T>(): TDeferrer<T> {
     return { promise, resolve, reject };
 }
 
-/**
- *
- * @param {string} filePath
- */
-async function loadData(filePath) {
+async function loadData(filePath: string) {
     try {
         return JSON.parse(await (await fs.promises.readFile(filePath)).toString())
     } catch (err) {
@@ -177,12 +165,7 @@ async function loadData(filePath) {
 var saveProcesses: { [x: string]: TDeferrer<void> } = {};
 var justSavedFiles: { [x: string]: boolean } = {};
 
-/**
- *
- * @param {string} filePath
- * @param {any} data
- */
-async function saveData(filePath, data, final = false) {
+async function saveData(filePath: string, data: any, final = false) {
     if (saveProcesses[filePath]) {
         await saveProcesses[filePath].promise
         if (!final) {
@@ -214,7 +197,7 @@ export function uuid(...any): string {
     return haxArr.join('');
 }
 
-export function newAutoIncrementId(collection: any[], idName: string) {
+export function newAutoIncrementId(collection: any[], idName: string = 'id') {
     if (!collection.length) {
         return 1;
     }

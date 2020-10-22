@@ -1,11 +1,11 @@
 {
   "name": "trdb",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Tobias Rapid Database",
   "main": "src/trdb.js",
   "bin": "./bin/trdb.cli.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -d --sourceMap",
     "test": "npm run build && nyc --reporter=lcov node test/test.js"
   },
   "repository": {
