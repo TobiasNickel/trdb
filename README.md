@@ -9,6 +9,8 @@ Rapid for rapid prototyping. The idea is, to instantly start coding and care abo
 
  - `sqlite3` Sqlite and sql.js are nice solutions if you want sqlite files. When starting out an app, I think working on a json file, can be much quicker, but it is a personal preference.
 
+ - `json-server` A restAPI for a JSON file and is based on lowdb. It allow frontend developers to start developing the app, before the actual API is ready. And with `tdrb`, a node.js developer can start developing the server side, before the database is ready setup.
+
 I want something that can easily added as db. That has a fully async API, so the module can easily be changed to mongo or SQL db implementations of a very simplistic API. When developing with this file database, you can still access the data directly, but the purpose is to have a limited API, not be full featured.
 
 This db got started when I studied oauth. In oauth, you have communication between clients and servers and servers and servers. So you need a few server apps. For studying, each server should have its own small db. For such case, small JSON-file databases are great.
@@ -24,10 +26,10 @@ const { newFileDB } = require('trdb');
 import { newFileDB } from 'trdb';
 ```
 
-Then use it. these examples presend the complete API.:
+Then use it. these examples present the complete API.:
 ```js
 // create a db
-const db = await newFileDB('./db.json');
+const db = newFileDB('./db.json');
 
 // create a collection
 const users = db.collection('users');
@@ -71,7 +73,7 @@ await users.remove({ id: user.id });
 
 // Feel free to create multiple dbs to put collections in separate files.
 // This example also shows the options for custom idName and
-// newId. This the newId defaults to uuidv4, and provides a method for
+// newId. This the newId defaults to uuid v4, and provides a method for
 // generating autoIncrementIds. You can implement your own ID functions,
 // returning and primitive like numbers and strings. 
 const postsDB = newFileDB('posts.json', {
@@ -81,9 +83,11 @@ const postsDB = newFileDB('posts.json', {
 const posts = db.collection('posts');
 ```
 
-This is all the API presented. Also, this module, will watch the json file. and if you or an other process will update the json-file. It get reloaded and populated in the db running process. This is very handy when inserting dummy data for test and quickly delete again. This will make your prototyping faster.
+This is all the API presented. Also, this module, will watch the json file. And if you or an other process will update the json-file. It get reloaded and populated in the db running process. This is very handy when inserting dummy data for test and quickly delete again. This will make your prototyping faster.
 
 Currently there is no mechanism to close the db. Meaning that the file will be watched for the runtime of the process/server. Because of that, you should not use this module to access lots and lots of json-files. For that, just read and parse the files as json using the `fs` module. Trdb is meant to mimic a DB.
+
+There was the idea, to have separate files for separate collections. But this does not need to be implemented by this library, as you can have a separate `db` for a collection.
 
 # expectations:
 This module is developed out of a need, it might still be changed, but when there are breaking API changes it follows the semver versioning. currently the code has 100% test-coverage measured with `nyc`.

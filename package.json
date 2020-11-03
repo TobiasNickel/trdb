@@ -1,7 +1,7 @@
 {
   "name": "trdb",
-  "version": "0.0.3",
-  "description": "Tobias Rapid Database",
+  "version": "0.0.4",
+  "description": "Develop the server side before your database is setup.",
   "main": "src/trdb.js",
   "bin": "./bin/trdb.cli.js",
   "scripts": {

@@ -1,6 +1,5 @@
 test/
 dist/
-*.js
 coverage/
 test/tmpTestDB.json
 tsconfig.json
@@ -10,3 +9,4 @@ bin/trdb.cli.d.ts
 
 src/trdb.ts
 bin/trdb.cli.ts
+posts.json
