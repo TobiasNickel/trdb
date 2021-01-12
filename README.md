@@ -92,4 +92,23 @@ There was the idea, to have separate files for separate collections. But this do
 # expectations:
 This module is developed out of a need, it might still be changed, but when there are breaking API changes it follows the semver versioning. currently the code has 100% test-coverage measured with `nyc`.
 
+# update 0.0.5
+There is a new optional second parameter for the collection method. This parameter is absolutely not used by the code. However, it can help to provide types, without using typescript. The next example is in javascript:
+
+```js
+const baseExample = {
+    id: '', // type string
+};
+// create a db
+const db = newFileDB('./db.json');
+
+// create a collection
+const users = db.collection('users', { name: '', ...baseExample });
+
+const myUser = await users.findOne({ name: 'tobias' }); // ts tell you that name is a valid prop
+
+myUser. // when using myUser. the editor will offer id and name.
+```
+
+
 let's get coding

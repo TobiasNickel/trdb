@@ -26,7 +26,7 @@ export function newFileDB(filePath: string, options?: TOptions) {
             await saveData(filePath, db.data);
         }),
 
-        collection<T>(collectionName: string) {
+        collection<T>(collectionName: string, example?: T) {
             if (!db.data[collectionName]) db.data[collectionName] = [];
 
             // const fieldNames = Object.keys(schema || {});
