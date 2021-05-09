@@ -44,6 +44,10 @@ const user = await users.insert({
 user.favoriteHobby = 'programming';
 await users.save(user);
 
+// update many or update without loading the item from db.
+// update job where name is Tobias Nickel.
+await users.update({name: 'Tobias Nickel'}, { job: 'superstar' });
+
 await users.insertMany([
     {
         name: 'Sebastian Sanchez',

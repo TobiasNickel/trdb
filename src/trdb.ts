@@ -13,6 +13,16 @@ type TDbData = {
     [x: string]: any[]
 }
 
+export interface ICollection<T> {
+    find(attrs: TAttribute<T>): Promise<T[]>;
+    findOne(attrs: TAttribute<T>): Promise<T>;
+    insert(item: Partial<T>): Promise<T>;
+    insertMany(items: Array<Partial<T>>): Promise<T[]>;
+    update(attrs: TAttribute<T>, update:Partial<T>): Promise<void>;
+    save(item: T): Promise<void>;
+    remove(attrs: TAttribute<T>): Promise<void>;
+}
+
 export function newFileDB(filePath: string, options?: TOptions) {
     const {
         idName = 'id',
@@ -26,7 +36,7 @@ export function newFileDB(filePath: string, options?: TOptions) {
             await saveData(filePath, db.data);
         }),
 
-        collection<T>(collectionName: string, example?: T) {
+        collection<T>(collectionName: string, example?: T): ICollection<T> {
             if (!db.data[collectionName]) db.data[collectionName] = [];
 
             // const fieldNames = Object.keys(schema || {});
@@ -60,6 +70,14 @@ export function newFileDB(filePath: string, options?: TOptions) {
 
                 async insertMany(items: Array<Partial<T>>) {
                     return await Promise.all(items.map(item => collection.insert(item)));
+                },
+
+                async update(attrs: TAttribute<T>, update: Partial<T>){
+                    const itemsToUpdate = await collection.find(attrs);
+                    itemsToUpdate.forEach(item=>{
+                        Object.assign(item, update);
+                    });
+                    await Promise.all(itemsToUpdate.map(item=>collection.save(item)));
                 },
 
                 async save(item: T) {
