@@ -44,6 +44,7 @@ export function newFileDB(filePath: string, options?: TOptions) {
             const collection = {
 
                 async find(attrs: TAttribute<T>): Promise<T[]> {
+                    await db.connected;
                     return where(db.data[collectionName], attrs).map(item => {
                         return { ...item };
                     });
@@ -55,6 +56,7 @@ export function newFileDB(filePath: string, options?: TOptions) {
                 },
 
                 async insert(item: Partial<T>): Promise<T> {
+                    await db.connected;
                     const clone = {
                         [idName]: newId(db.data[collectionName], idName),
                         ...deepClone(item),
@@ -81,6 +83,7 @@ export function newFileDB(filePath: string, options?: TOptions) {
                 },
 
                 async save(item: T) {
+                    await db.connected;
                     const existing = where(db.data[collectionName], {
                         [idName]: item[idName]
                     })[0];
@@ -95,6 +98,7 @@ export function newFileDB(filePath: string, options?: TOptions) {
                 },
 
                 async remove(attrs: TAttribute<T>) {
+                    await db.connected;
                     const removeItems = where(db.data[collectionName], attrs);
                     db.data[collectionName] = db.data[collectionName].filter(entry => !removeItems.includes(entry));
                     await saveData(filePath, db.data);

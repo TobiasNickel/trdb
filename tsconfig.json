@@ -3,7 +3,8 @@
         "allowJs": true,
         "checkJs": true,
         "target": "ES2017",
-        "module": "commonjs"
+        "module": "commonjs",
+        "types":["node"]
     },
     "exclude": ["./node_modules", "./coverage"],
     "include": ["."]
