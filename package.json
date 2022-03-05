@@ -1,6 +1,6 @@
 {
   "name": "trdb",
-  "version": "0.0.7",
+  "version": "1.0.0",
   "description": "Develop the server side before your database is setup.",
   "main": "src/trdb.js",
   "bin": "./bin/trdb.cli.js",
@@ -14,7 +14,7 @@
   },
   "keywords": [],
   "author": "Tobias Nickel",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/TobiasNickel/trdb/issues"
   },
@@ -24,5 +24,8 @@
     "nyc": "^15.1.0",
     "typescript": "^4.0.3"
   },
-  "type": "commonjs"
+  "type": "commonjs",
+  "dependencies": {
+    "sift": "^16.0.0"
+  }
 }

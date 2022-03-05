@@ -11,6 +11,12 @@ interface IUser{
     job: string; 
     id: string; 
     favoriteHobby:string;
+    address: {
+      street: string;
+      houseNumber: string;
+      lon: number;
+      lat: number;
+    };
     created: Date;
 }
 
@@ -49,7 +55,7 @@ async function main(){
     ]);
 
     await users.findOne({name: 'Tobias Nickel'})
-    
+
     await users.findOne({id:['123']});
     await users.remove({id:''});
     
@@ -78,6 +84,13 @@ async function main(){
 
     deepClone([]);
 
+    // typescript tests currently still fail https://github.com/crcn/sift.js/issues/245
+    // await users.findOne({address:{street:[123]}});
+    // await users.findOne({address: { lon: { $in: [2,3,3] }}})
+    // await users.findOne({address: { street: { $in: ['mainstreet'] }}})
+    // await users.findOne({name:{$in:['sasfsadf']}})
+
+    await users.findOne({ name: { $in: ["","asdf"] }})
 
     await fs.promises.unlink(tmpTestFile);
     await fs.promises.unlink(tmpTestFile2);
