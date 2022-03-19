@@ -1,6 +1,6 @@
 {
   "name": "trdb",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Develop the server side before your database is setup.",
   "main": "src/trdb.js",
   "bin": "./bin/trdb.cli.js",

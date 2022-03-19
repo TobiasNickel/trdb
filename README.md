@@ -96,7 +96,7 @@ There was the idea, to have separate files for separate collections. But this do
 # expectations:
 This module is developed out of a need, it might still be changed, but when there are breaking API changes it follows the semver versioning. currently the code has 100% test-coverage measured with `nyc`.
 
-# update 0.0.5
+### update 0.0.5
 There is a new optional second parameter for the collection method. This parameter is absolutely not used by the code. However, it can help to provide types, without using typescript. The next example is in javascript:
 
 ```js
@@ -113,6 +113,11 @@ const myUser = await users.findOne({ name: 'tobias' }); // ts tell you that name
 
 myUser. // when using myUser. the editor will offer id and name.
 ```
+### update 0.0.7
+no need to `await db.connected`.
+
+### update 0.0.8
+Allow app to provide ID for `insert`.
 
 
 let's get coding

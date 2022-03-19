@@ -63,7 +63,10 @@ export function newFileDB(filePath: string, options?: TOptions) {
                     } as any;
 
                     if (item[idName]) {
-                        throw Error(idName + ' already exist');
+                        const existing = await collection.findOne({ [idName]: item[idName] } as any);
+                        if (existing) {
+                            throw Error(idName + ' already exist');
+                        }
                     }
                     db.data[collectionName].push(clone);
                     await saveData(filePath, db.data);
