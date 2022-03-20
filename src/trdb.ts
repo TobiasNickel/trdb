@@ -231,6 +231,7 @@ export function newAutoIncrementId(collection: any[], idName: string = 'id') {
 
 
 export function deepClone<T>(obj: T): T {
+    if (!obj) return obj;
     if (typeof obj !== 'object') return obj;
     // @ts-ignore
     if (Array.isArray(obj)) return obj.map(deepClone);

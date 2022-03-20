@@ -119,5 +119,8 @@ no need to `await db.connected`.
 ### update 0.0.8
 Allow app to provide ID for `insert`.
 
+### update 0.0.9
+clone null/undefined values
+
 
 let's get coding
